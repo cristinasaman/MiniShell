@@ -26,7 +26,7 @@ char *shell_read_line(void){
 
         if (character == EOF || character == '\n'){ 
             buffer[position] = '\0';
-            return buffer;
+            break;
         }
         else{
             buffer[position] = character;
@@ -43,6 +43,8 @@ char *shell_read_line(void){
             }
         }
     }
+    
+    return buffer;
 }
 
 char **shell_parse_line(char *line){
