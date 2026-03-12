@@ -1,16 +1,36 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 -Iinclude
+CFLAGS = -Wall -Wextra -Werror -O2 -g -Iinclude
+TARGET = minishell
+SRCS = src/main.c src/shell.c src/lexer.c
+OBJS = $(SRCS:.c=.o)
+DEPS = $(OBJS:.o=.d)
 
 # target: requirements
 #         target build instructions
 
-minishell: src/main.o
-	${CC} ${CFLAGS} -o minishell src/main.o
+all: $(TARGET)
 
-src/main.o: src/main.c
-	${CC} ${CFLAGS} -c src/main.c -o src/main.o
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-.PHONY: clean
+%.o: %.c
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+-include $(DEPS)
+
+run: all
+	./$(TARGET)
+
 clean:
-	rm -f src/*.o minishell
+	rm -f $(OBJS) 
 	@echo "Cleaned up the build files."
+
+fclean: clean
+	rm -f $(TARGET)
+	@echo "Removed the executable."
+
+re: fclean all
+
+.PHONY: all clean fclean re run
+
+# memcheck later
