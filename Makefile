@@ -2,8 +2,9 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O2 -g -Iinclude
 TARGET = minishell
 SRCS = src/main.c src/shell.c src/lexer.c
-OBJS = $(SRCS:.c=.o)
-DEPS = $(OBJS:.o=.d)
+BUILD_DIR = build
+OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o, $(SRCS))
+DEPS = $(patsubst %.c,$(BUILD_DIR)/%.d, $(SRCS))
 
 # target: requirements
 #         target build instructions
@@ -13,7 +14,8 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-%.o: %.c
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 -include $(DEPS)
