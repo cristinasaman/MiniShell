@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O2 -g -Iinclude
 TARGET = minishell
-SRCS = src/main.c src/shell.c src/parser.c src/executor.c
+SRCS = src/main.c src/env.c src/shell.c src/parser.c src/executor.c
 BUILD_DIR = build
 OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o, $(SRCS))
 DEPS = $(patsubst %.c,$(BUILD_DIR)/%.d, $(SRCS))
