@@ -1,37 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "shell.h"
+#include "env.h"
 #include "parser.h"
 #include "executor.h"
 
 void mini_shell_loop(void){
-    char *line;
-    char **args;
-    int status = 1;
+    bool is_running = true;
 
-    char *username = getenv("USER");
-    char *hostname = getenv("HOSTNAME");
-    char *directory = getenv("PWD");
+    while (is_running){
+        print_prompt();
 
+        char *line = shell_read_line();
+        if (line == NULL) break;
 
-    while (status){
-        printf(username);
-        printf("@");
-        printf(hostname);
-        printf(":");
-        printf(directory);
-        printf("$ ");
+        char **args = shell_parse_line(line);
 
+        is_running = shell_execute_command(args);
 
-        line = shell_read_line();
-        args = shell_parse_line(line);
-        status = shell_execute_command(args);
-
+        // TODO: check memory cleanup practices
+        // TODO: see more on helper functions for cleanup
         free(line);
-        for(int i = 0; args[i] != NULL; i++){
-            free(args[i]);
+
+        if(args != NULL){
+            for(int i = 0; args[i] != NULL; i++){
+                free(args[i]);
+            }
+            free(args);
         }
-        free(args);
     }
 }
