@@ -1,29 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "shell.h"
-#include "lexer.h"
+#include "parser.h"
+#include "executor.h"
 
-int shell_execute_command(char **args) {
-    if (args[0] == NULL) {
-        return 1;
-    }
-
-    // printf("--- Execution Debug ---\n");
-    // for (int i = 0; args[i] != NULL; i++) {
-    //     printf("args[%d]: %s\n", i, args[i]);
-    // }
-    // printf("-----------------------\n");
-
-    return 1; 
-}
-
-void mini_shell_loop(){
+void mini_shell_loop(void){
     char *line;
     char **args;
     int status = 1;
 
+    char *username = getenv("USER");
+    char *hostname = getenv("HOSTNAME");
+    char *directory = getenv("PWD");
+
+
     while (status){
-        printf("> ");
+        printf(username);
+        printf("@");
+        printf(hostname);
+        printf(":");
+        printf(directory);
+        printf("$ ");
+
 
         line = shell_read_line();
         args = shell_parse_line(line);
