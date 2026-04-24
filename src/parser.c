@@ -3,7 +3,7 @@
 #include <string.h>
 #include "parser.h"
 
-char *shell_read_line(void){
+char *read_shell_line(void){
     int buffer_size = LINE_BUFFER_SIZE;
     char *buffer = malloc(sizeof(char) * buffer_size);
     int position = 0;
@@ -40,7 +40,7 @@ char *shell_read_line(void){
     return buffer;
 }
 
-char **shell_parse_line(char *line){
+char **parse_shell_line(char *line){
     int buffer_size = TOKEN_BUFFER_SIZE;
     char **tokens = malloc(sizeof(char *) * buffer_size);
     char *line_ptr = line;

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-int shell_execute_command(char **args) {
+int execute_shell_command(char **args) {
     if (args[0] == NULL) {
         return 1;
     }

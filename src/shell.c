@@ -11,14 +11,14 @@ void mini_shell_loop(void){
     bool is_running = true;
 
     while (is_running){
-        print_prompt();
+        print_shell_prompt();
 
-        char *line = shell_read_line();
+        char *line = read_shell_line();
         if (line == NULL) break;
 
-        char **args = shell_parse_line(line);
+        char **args = parse_shell_line(line);
 
-        is_running = shell_execute_command(args);
+        is_running = execute_shell_command(args);
 
         // TODO: check memory cleanup practices
         // TODO: see more on helper functions for cleanup

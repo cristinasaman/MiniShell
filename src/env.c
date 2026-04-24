@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_prompt(void){
+void print_shell_prompt(void){
     char *username = getenv("USER");
     char *hostname = getenv("HOSTNAME");
     char *directory = getenv("PWD");
